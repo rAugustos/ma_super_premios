@@ -1,8 +1,8 @@
 <script setup>
-import { computed } from 'vue';
+import {computed} from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import {Head, Link, useForm} from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     status: String,
@@ -19,21 +19,22 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 
 <template>
     <GuestLayout>
-        <Head title="Email Verification" />
+        <Head title="Verificação de e-mail"/>
 
         <div class="mb-4 text-sm text-gray-600">
-            Thanks for signing up! Before getting started, could you verify your email address by clicking on the link
-            we just emailed to you? If you didn't receive the email, we will gladly send you another.
+            Estamos felizes que você esteja aqui! Antes de começarmos, precisamos que você verifique o seu e-mail
+            clicando no link enviado para você. Não se preocupe caso não tenha recebido o e-mail, você pode gerar
+            um novo link.
         </div>
 
         <div class="mb-4 font-medium text-sm text-green-600" v-if="verificationLinkSent">
-            A new verification link has been sent to the email address you provided during registration.
+            Um novo link de verificação foi enviado para o seu e-mail.
         </div>
 
         <form @submit.prevent="submit">
             <div class="mt-4 flex items-center justify-between">
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Resend Verification Email
+                    Re-enviar o e-mail de verificação
                 </PrimaryButton>
 
                 <Link
@@ -41,7 +42,8 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                     method="post"
                     as="button"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >Log Out</Link
+                >Encerrar sessão
+                </Link
                 >
             </div>
         </form>
