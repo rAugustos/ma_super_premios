@@ -1,10 +1,10 @@
 <template>
     <AuthenticatedLayout>
-        <LatestWinners />
-        <Partners />
-        <HowTo />
-        <NewsLetter />
-        <LatestDraws :products="products" />
+        <LatestWinners/>
+        <Partners/>
+        <HowTo/>
+        <NewsLetter/>
+        <LatestDraws :products="products" v-if="products.length"/>
     </AuthenticatedLayout>
 </template>
 <script setup>
