@@ -29,12 +29,13 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('admin.products.index')" :active="route().current('admin.products.*')">
+                                <NavLink :href="route('admin.products.index')"
+                                         :active="route().current('admin.products.*')">
                                     Sorteios
                                 </NavLink>
-<!--                                <NavLink :href="route('dashboard')" :active="route().current('admin.users.*')">-->
-<!--                                    Usuários-->
-<!--                                </NavLink>-->
+                                <NavLink :href="route('admin.users.index')" :active="route().current('admin.users.*')">
+                                    Usuários
+                                </NavLink>
                             </div>
                         </div>
 
@@ -120,10 +121,10 @@ const showingNavigationDropdown = ref(false);
                                            :active="route().current('admin.products.*')">
                             Sorteios
                         </ResponsiveNavLink>
-<!--                        <ResponsiveNavLink :href="route('admin.users.index')"-->
-<!--                                           :active="route().current('admin.users.*')">-->
-<!--                            Usuários-->
-<!--                        </ResponsiveNavLink>-->
+                        <ResponsiveNavLink :href="route('admin.users.index')"
+                                           :active="route().current('admin.users.*')">
+                            Usuários
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->

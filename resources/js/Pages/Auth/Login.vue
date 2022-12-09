@@ -14,6 +14,7 @@ defineProps({
 
 const form = useForm({
     email: '',
+    phone: '',
     password: '',
     remember: false,
 });
@@ -33,7 +34,7 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="flex flex-col gap-4">
             <div>
                 <InputLabel for="email" value="E-mail"/>
 
@@ -50,7 +51,23 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email"/>
             </div>
 
-            <div class="mt-4">
+            <div>
+                <InputLabel for="phone" value="Telefone"/>
+
+                <TextInput
+                    id="phone"
+                    type="tel"
+                    class="mt-1 block w-full"
+                    v-model="form.phone"
+                    required
+                    autofocus
+                    autocomplete="phone"
+                />
+
+                <InputError class="mt-2" :message="form.errors.phone"/>
+            </div>
+
+            <div>
                 <InputLabel for="password" value="Senha"/>
 
                 <TextInput
@@ -65,14 +82,14 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password"/>
             </div>
 
-            <div class="block mt-4">
+            <div class="block">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember"/>
                     <span class="ml-2 text-sm text-gray-600">Lembre-se de mim</span>
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end">
                 <Link
                     :href="route('register')"
                     class="underline mr-2 text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

@@ -70,7 +70,9 @@
                     </div>
                 </div>
 
-                <PrimaryButton>Atualizar sorteio</PrimaryButton>
+                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Atualizar sorteio
+                </PrimaryButton>
             </form>
         </div>
     </AdminLayout>

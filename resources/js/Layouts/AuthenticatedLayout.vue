@@ -15,7 +15,7 @@ const showingNavigationDropdown = ref(false);
         <div class="min-h-screen bg-gray-50">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-screen-lg mx-auto">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
@@ -68,15 +68,15 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile</DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')"> Perfil</DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            Encerrar sessão
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
                             </div>
                         </div>
-                        <div class="fixed top-0 right-0 px-6 py-4 sm:block" v-else>
+                        <div class="flex flex-row items-center px-6 py-4 sm:block" v-else>
                             <Link :href="route('login')"
                                   class="text-sm text-gray-700 dark:text-gray-500 underline">
                                 Login
@@ -147,9 +147,9 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')"> Perfil</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Encerrar sessão
                             </ResponsiveNavLink>
                         </div>
                     </div>
@@ -158,7 +158,7 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-screen-lg mx-auto py-6">
                     <slot name="header"/>
                 </div>
             </header>

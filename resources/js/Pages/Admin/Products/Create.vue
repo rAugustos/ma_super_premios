@@ -116,7 +116,9 @@
                 <!--                    </div>-->
                 <!--                </div>-->
 
-                <PrimaryButton>Criar sorteio</PrimaryButton>
+                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Criar
+                    sorteio
+                </PrimaryButton>
             </form>
         </div>
     </AdminLayout>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -52,7 +53,11 @@ Route::get('logout', function () {
     return redirect()->route('index');
 });
 
-Route::inertia('numbers', 'Users/Numbers')->name('numbers');
+Route::get('numbers', function () {
+//    auth()->user()->load('luckyNumbers');
+//    $user->luckyNumbers->load('product');
+    return inertia('Admin/Users/Show', ['user' => auth()->user()]);
+})->name('numbers')->middleware('auth');
 
 Route::inertia('profile', 'Users/Edit');
 Route::put('{user}/profile', function (Request $request, User $user) {
@@ -66,7 +71,7 @@ Route::get('products/{product}/{quantity}/checkout', function (Product $product,
     return inertia('Products/Checkout', ['product' => $product, 'quantity' => $quantity]);
 })->name('products.checkout');
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     Route::get('/', function () {
         $federal = Http::withoutVerifying()->get("https://servicebus2.caixa.gov.br/portaldeloterias/api/federal")->object();
         $vencedores = [];
@@ -79,8 +84,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     })->name('index');
 
     Route::resource('products', AdminProductController::class)->except(['show']);
+    Route::resource('users', AdminUsersController::class)->only(['index', 'show']);
 
-    Route::inertia('/users', 'Admin/Users/Index');
     Route::inertia('/login', 'Admin/Login');
     Route::delete('/products/images/{image}', function (Request $request, ProductImage $image) {
         Storage::disk('local')->delete("public/$image->path");
