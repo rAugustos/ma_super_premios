@@ -33,7 +33,12 @@ use Illuminate\Support\Facades\Storage;
 Route::get('/', function () {
     $products = Product::limit(5)->get();
     $products->load('images');
-    return inertia('Index/Index', ['products' => $products]);
+    return inertia('Index/Index', [
+        'products' => $products,
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'phpVersion' => PHP_VERSION,
+    ]);
 })->name('index');
 
 Route::inertia('login', 'Users/Login');

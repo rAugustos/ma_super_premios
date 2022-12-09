@@ -76,6 +76,19 @@ const showingNavigationDropdown = ref(false);
                                 </Dropdown>
                             </div>
                         </div>
+                        <div class="fixed top-0 right-0 px-6 py-4 sm:block" v-else>
+                            <Link :href="route('login')"
+                                  class="text-sm text-gray-700 dark:text-gray-500 underline">
+                                Login
+                            </Link>
+
+                            <Link
+                                :href="route('register')"
+                                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline"
+                            >
+                                Cadastro
+                            </Link>
+                        </div>
 
                         <!-- Hamburger -->
                         <div class="-mr-2 flex items-center sm:hidden">
