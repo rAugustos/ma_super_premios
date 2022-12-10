@@ -2,13 +2,13 @@
 
 ### Principais tecnologias:
 
-<img src="https://img.icons8.com/fluency/48/null/tailwind_css.png" width="48" height="48" /> <img src="https://laravel.com/img/logomark.min.svg" width="48" height="48" /> <img src="https://avatars.githubusercontent.com/u/51960834?s=200&v=4" width="48" height="48" /> <img src="https://img.icons8.com/color/48/null/mysql-logo.png" width="48" height="48" /> <img src="https://brasa.org.br/wp-content/uploads/2021/02/logo-pix-icone-256.png" width="48" height="48" /> <img src="https://v2.vitejs.dev/logo.svg" width="48" height="48" />
+<img src="https://img.icons8.com/fluency/48/null/tailwind_css.png" width="48" height="48" /> <img src="https://laravel.com/img/logomark.min.svg" width="48" height="48" /> <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/null/external-vuejs-an-open-source-javascript-framework-for-building-user-interfaces-and-single-page-applications-logo-color-tal-revivo.png"/> <img src="https://img.icons8.com/color/48/null/mysql-logo.png" width="48" height="48" /> <img src="https://brasa.org.br/wp-content/uploads/2021/02/logo-pix-icone-256.png" width="48" height="48" /> <img src="https://v2.vitejs.dev/logo.svg" width="48" height="48" />
 
 ### Uso de cada tecnologia:
 
 * **[TailwindCSS](https://tailwindcss.com/)**: Estilização das telas e componentes
 * **[Laravel](https://laravel.com/)**: Esqueleto do projeto (Modelos, Controller, Router, etc)
-* **[VueJS](https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/null/external-vuejs-an-open-source-javascript-framework-for-building-user-interfaces-and-single-page-applications-logo-color-tal-revivo.png)**: Criação de componentes reutilizáveis e com interações em tempo real.
+* **[VueJS](https://vuejs.org)**: Criação de componentes reutilizáveis e com interações em tempo real.
 * **[MySQL](https://www.mysql.com/)**: Banco de dados
 * **[PIX API](https://developer.itau.com.br/baas/#/)**: Integração c/ API do Itaú para compra dos números
 * **[Vite](https://vitejs.dev/)**: Asset bundling p/ funcionamento adequeado do TailwindCSS
