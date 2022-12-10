@@ -14,6 +14,7 @@
                         <th scope="col" class="py-3 px-6">R$ / número</th>
                         <th scope="col" class="py-3 px-6">R$ / lote</th>
                         <th scope="col" class="py-3 px-6">Valor dos botões</th>
+                        <th scope="col" class="py-3 px-6">Ações</th>
                     </tr>
                     </thead>
                     <tbody>

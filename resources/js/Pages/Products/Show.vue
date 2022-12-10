@@ -8,7 +8,7 @@
                     <div class="flex items-center w-full sm:h-96">
                         <div class="w-full flex">
                             <img class="w-full rounded-2xl object-cover sm:h-96"
-                                 :src="'/storage/' + image"/>
+                                 :src="'/storage/' + image" alt=""/>
                         </div>
                     </div>
                     <div class="flex mt-1 gap-2 overflow-auto">
@@ -84,14 +84,14 @@
                             <button
                                 @click="quantity = quantity >= product.buttons_value ? quantity - product.buttons_value : 0"
                                 class="rounded-full text-gray-700 border border-gray-300 place-items-center hover:text-red-500 hover:border-red-500 transition-all p-1 aspect-square">
-                                <p>-{{ product.buttons_value }}</p>
+                                -{{ product.buttons_value }}
                             </button>
                             <p>
                                 {{ quantity }} cotas
                             </p>
                             <button @click="quantity += product.buttons_value"
                                     class="rounded-full text-gray-700 aspect-square grid place-items-center border border-gray-300 hover:border-emerald-400 hover:text-emerald-400 p-1 transition-all">
-                                <p class="text-sm">+{{ product.buttons_value }}</p>
+                                +{{ product.buttons_value }}
                             </button>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                         <Link :href="route('products.checkout', {'product': product.id, 'quantity': quantity})">
                             <PrimaryButton>Prosseguir <i class="bi bi-cart-check"></i></PrimaryButton>
                         </Link>
-                        <Link :href="route('products.index')">
+                        <Link :href="route('numbers')">
                             <SecondaryButton>Ver meus números</SecondaryButton>
                         </Link>
                     </div>

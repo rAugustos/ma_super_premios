@@ -14,7 +14,6 @@
 
                 <InputError class="mt-2" :message="form.errors.name"/>
             </div>
-
             <div>
                 <InputLabel for="email" value="E-mail"/>
 
@@ -28,7 +27,6 @@
 
                 <InputError class="mt-2" :message="form.errors.email"/>
             </div>
-
             <div>
                 <InputLabel for="phone" value="Telefone"/>
 
@@ -42,7 +40,6 @@
 
                 <InputError class="mt-2" :message="form.errors.phone"/>
             </div>
-
             <div>
                 <InputLabel for="document" value="CPF (opcional)"/>
 
@@ -56,7 +53,6 @@
 
                 <InputError class="mt-2" :message="form.errors.document"/>
             </div>
-
             <div>
                 <InputLabel for="password" value="Senha"/>
 
@@ -69,7 +65,6 @@
 
                 <InputError class="mt-2" :message="form.errors.password"/>
             </div>
-
             <div>
                 <InputLabel for="password_confirmation" value="Confirme sua senha"/>
 
@@ -82,7 +77,6 @@
 
                 <InputError class="mt-2" :message="form.errors.password_confirmation"/>
             </div>
-
             <div class="flex items-center justify-end mt-4">
                 <Link
                     :href="route('login')"
