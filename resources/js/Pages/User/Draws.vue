@@ -1,15 +1,9 @@
 <template>
-    <AdminLayout>
+    <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dados do usuário</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Seus sorteios</h2>
         </template>
         <div class="container mx-auto max-w-screen-lg sm:py-6 py:4">
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">Nome:</span> {{ user.name }}</p></div>
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">E-mail:</span> {{ user.email }}</p></div>
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">Telefone:</span> {{ user.phone }}</p></div>
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">CPF:</span> {{ user.document || 'Não informado' }}</p></div>
-            <hr class="my-4">
-            <p class="font-semibold text-lg">Sorteios</p>
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-2">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -50,13 +44,13 @@
                 </div>
             </Modal>
         </div>
-    </AdminLayout>
+    </AuthenticatedLayout>
 </template>
 
 <script setup>
-import AdminLayout from "@/Layouts/AdminLayout.vue";
 import {ref} from "vue";
 import Modal from "@/Components/Modal.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 const props = defineProps({
     user: Object,

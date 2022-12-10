@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminUsersController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Models\LuckyNumber;
 use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,18 +25,10 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
-
 Route::get('/', function () {
     $products = Product::limit(5)->get();
     $products->load('images');
+
     return inertia('Index/Index', [
         'products' => $products,
         'canLogin' => Route::has('login'),
@@ -41,23 +36,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('index');
-
-Route::inertia('login', 'Users/Login');
-Route::post('login', [LoginController::class, 'login']);
-
-Route::inertia('register', 'Users/Register');
-Route::post('register', [LoginController::class, 'register']);
-
-Route::get('logout', function () {
-    Auth::logout();
-    return redirect()->route('index');
-});
-
-Route::get('numbers', function () {
-//    auth()->user()->load('luckyNumbers');
-//    $user->luckyNumbers->load('product');
-    return inertia('Admin/Users/Show', ['user' => auth()->user()]);
-})->name('numbers')->middleware('auth');
 
 Route::inertia('profile', 'Users/Edit');
 Route::put('{user}/profile', function (Request $request, User $user) {
@@ -100,6 +78,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('draws', function () {
+        $filtered = auth()->user()->luckyNumbers->unique('product_id');
+
+        $products = collect([]);
+        foreach ($filtered as $number) {
+            $product = Product::find($number->product_id);
+            $product->load('luckyNumbers');
+            $products->push($product);
+        }
+
+        return inertia('User/Draws', ['products' => $products]);
+    })->name('numbers');
 });
 
 require __DIR__ . '/auth.php';

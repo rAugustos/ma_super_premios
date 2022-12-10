@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 
 class AdminUsersController extends Controller
@@ -13,7 +14,7 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        return inertia('Admin/Users/Index', ['users' => User::paginate(25)]);;
+        return inertia('Admin/Users/Index', ['users' => User::paginate(25)]);
     }
 
     /**
@@ -25,9 +26,15 @@ class AdminUsersController extends Controller
     public function show(User $user)
     {
         $filtered = $user->luckyNumbers->unique('product_id');
-        dd($filtered->first()->product);
-        // auth()->user()->luckyNumbers->where('product_id', '=', $luckyNumber->product->id)->count()
-//        $products->load('luckyNumbers');
-        return inertia('Admin/Users/Show', ['user' => $user, 'products' => $products, 'count' => $count]);
+
+        $products = collect([]);
+        foreach ($filtered as $number) {
+            $product = Product::find($number->product_id);
+            $product->load('luckyNumbers');
+            $products->push($product);
+        }
+
+        return inertia('Admin/Users/Show', ['user' => $user, 'products' => $products]);
     }
 }
+

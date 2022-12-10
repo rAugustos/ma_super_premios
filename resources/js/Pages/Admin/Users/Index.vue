@@ -23,7 +23,7 @@
                         <td class="py-4 px-6">{{ user.document }}</td>
                         <td class="py-4 px-6">
                             <Link :href="route('admin.users.show', user.id)" class="text-blue-500 font-medium">
-                                Ver números
+                                Ver sorteios
                             </Link>
                         </td>
                     </tr>

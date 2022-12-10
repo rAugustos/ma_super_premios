@@ -1,7 +1,5 @@
 <template>
     <GuestLayout>
-        <Head title="Cadastro"/>
-
         <form @submit.prevent="submit" class="flex flex-col gap-4">
             <div>
                 <InputLabel for="name" value="Nome"/>
@@ -11,7 +9,6 @@
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
-                    autofocus
                     autocomplete="name"
                 />
 
@@ -41,8 +38,6 @@
                     class="mt-1 block w-full"
                     v-model="form.phone"
                     v-mask="'(##) #####-####'"
-                    autofocus
-                    autocomplete="phone"
                 />
 
                 <InputError class="mt-2" :message="form.errors.phone"/>
@@ -57,8 +52,6 @@
                     class="mt-1 block w-full"
                     v-model="form.document"
                     v-mask="'###.###.###-##'"
-                    autofocus
-                    autocomplete="document"
                 />
 
                 <InputError class="mt-2" :message="form.errors.document"/>
@@ -72,7 +65,6 @@
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password"
-                    autocomplete="new-password"
                 />
 
                 <InputError class="mt-2" :message="form.errors.password"/>
@@ -86,7 +78,6 @@
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password_confirmation"
-                    autocomplete="new-password"
                 />
 
                 <InputError class="mt-2" :message="form.errors.password_confirmation"/>
@@ -114,7 +105,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import {Head, Link, useForm} from '@inertiajs/inertia-vue3';
+import {Link, useForm} from '@inertiajs/inertia-vue3';
 
 const form = useForm({
     name: '',
