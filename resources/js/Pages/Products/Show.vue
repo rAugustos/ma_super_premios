@@ -19,18 +19,12 @@
                     </div>
                 </div>
                 <div class="col-span-3">
-                    <p class="text-2xl font-bold">
-                        {{ product.name }}
-                    </p>
+                    <p class="text-2xl font-bold">{{ product.name }}</p>
                     <div class="bg-emerald-400 px-2 py-1 rounded-xl my-2 w-fit">
-                        <p class="font-semibold">
-                            R$ {{ product.share_price }}
-                        </p>
+                        <p class="font-semibold">R$ {{ product.share_price }}</p>
                     </div>
                     <div class="my-4">
-                        <p class="text-lg font-bold">
-                            Compartilhe
-                        </p>
+                        <p class="text-lg font-bold">Compartilhe</p>
                         <div class="flex flex-row gap-3 mt-2">
                             <a :href="'https://www.facebook.com/sharer/sharer.php?u=' + url"
                                class="rounded-full cursor-pointer p-0 bg-blue-500 grid place-items-center text-white w-10 aspect-square">
@@ -51,9 +45,7 @@
                         </div>
                     </div>
                     <div class="my-4">
-                        <p class="text-lg font-bold">
-                            Promoções
-                        </p>
+                        <p class="text-lg font-bold">Promoções</p>
                         <div class="grid grid-cols-2 gap-2 mt-2 w-72">
                             <button @click="quantity = 10"
                                     class="border text-gray-700 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
@@ -74,9 +66,7 @@
                         </div>
                     </div>
                     <div class="my-2 flex flex-col">
-                        <p class="text-sm">
-                            Total
-                        </p>
+                        <p class="text-sm">Total</p>
                         <p class="text-2xl font-bold">
                             R$ {{ quantity * product.share_price }}
                         </p>
@@ -86,9 +76,7 @@
                                 class="rounded-full text-gray-700 border border-gray-300 place-items-center hover:text-red-500 hover:border-red-500 transition-all p-1 aspect-square">
                                 -{{ product.buttons_value }}
                             </button>
-                            <p>
-                                {{ quantity }} cotas
-                            </p>
+                            <p>{{ quantity }} cotas</p>
                             <button @click="quantity += product.buttons_value"
                                     class="rounded-full text-gray-700 aspect-square grid place-items-center border border-gray-300 hover:border-emerald-400 hover:text-emerald-400 p-1 transition-all">
                                 +{{ product.buttons_value }}
