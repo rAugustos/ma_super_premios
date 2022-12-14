@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -78,6 +77,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('generate-numbers', function (Request $request) {
+        $numbers = collect([]);
+
+        for ($i = 0; $i < $request->quantity; $i++) {
+            $numbers->push(LuckyNumber::create([
+                'user_id' => auth()->id(),
+                'product_id' => $request->product_id,
+                'number' => LuckyNumber::generateNumber($request->product_id),
+            ]));
+        }
+
+        return $numbers->toJson();
+    })->name('generate-numbers');
 
     Route::get('draws', function () {
         $filtered = auth()->user()->luckyNumbers->unique('product_id');
