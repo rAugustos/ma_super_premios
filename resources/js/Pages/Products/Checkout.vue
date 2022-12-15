@@ -24,7 +24,7 @@
                 <p class="text-sm">Total</p>
                 <p class="font-bold text-lg">R$ {{ product.share_price * quantity }}</p>
                 <div class="flex flex-row gap-3 mt-2">
-                    <PrimaryButton @click="generatePIX()">Prosseguir</PrimaryButton>
+                    <PrimaryButton @click="confirmCheckout()">Prosseguir</PrimaryButton>
                     <SecondaryButton>Voltar</SecondaryButton>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             </p>
 
             <div class="border p-2 rounded w-48 aspect-square mt-4">
-                <img src="http://faq-login-unico.servicos.gov.br/en/latest/_images/imagem_qrcode_exemplo.jpg" alt=""
+                <img :src="'data:image\png;base64,' + qrCode" alt=""
                      class="w-full aspect-square">
             </div>
             <p class="mt-3 mb-1.5 font-semibold">Chave copia e cola:</p>
@@ -50,12 +50,7 @@
                 <div class="rounded-l border-emerald-400 border-dashed border-2 bg-gray-50 p-2 overflow-hidden">
                     <div class="flex flex-row justify-between gap-1">
                         <p class="text-emerald-400 font-bold whitespace-nowrap text-sm">
-                            2022-11-18 16:14:27 UTC 2022-11-18 16:14:27 UTC 2022-11-18 16:14:27 UTC
-                            2022-11-18
-                            16:14:27 2022-11-18 16:14:27 UTC 2022-11-18 16:14:27 UTC 2022-11-18 16:14:27 UTC
-                            2022-11-18
-                            16:14:27
-                            UTC
+                            {{ pix.pixCopiaECola || "" }}
                         </p>
                     </div>
                 </div>
@@ -94,6 +89,8 @@ import {Link} from '@inertiajs/inertia-vue3'
 import axios from "axios"
 
 const step = ref(1);
+const qrCode = ref("");
+const sandbox_token = ref("");
 const pix = reactive({});
 
 const props = defineProps({
@@ -103,49 +100,102 @@ const props = defineProps({
 
 const sandbox_url = "https://devportal.itau.com.br/sandboxapi";
 
-const auth = {
-    client_id: "d4b0717d-da08-3baa-adee-77eb85f59566",
-    sandbox_token: "eyJhbGciOiJIUzI1NiJ9.eyJzb3VyY2UiOiJzdHMtc2FuZGJveCIsImVudiI6IlAiLCJmbG93IjoiQ0MiLCJzY29wZSI6InBpeF9yZWNlYmltZW50b3NfZXh0X3YyLXNjb3BlLCBwYWdhbWVudG9zLXBpeGluZGlyZXRvcy12MS1leHQtYXdzLXNjb3BlLCBwaXhfcmVjZWJpbWVudG9zX2NvbmNpbGlhY29lc192Ml9leHQtc2NvcGUsIHNpc3BhZ19leHQtc2NvcGUsIGRpY3QtaW5kaXJldG8tdjItZXh0LWF3cy1zY29wZSIsInN1YiI6ImQ0YjA3MTdkLWRhMDgtM2JhYS1hZGVlLTc3ZWI4NWY1OTU2NiIsImlhdCI6MTY3MTAzNjg3NSwiZXhwIjoxNjcxMDM3NDc1fQ.TMJUzuatS6AdS_8uwILNAkCm90XSca_W3VjGiC4Lfac", // todo: gerar função para gerar token
-    client_secret: "f7ea714f-fdd7-4a4d-990e-f081fa7af269"
+function generateToken() {
+    return axios({
+        method: "POST",
+        url: `https://devportal.itau.com.br/api/jwt`,
+        data: {
+            client_id: "d4b0717d-da08-3baa-adee-77eb85f59566",
+            client_secret: "f7ea714f-fdd7-4a4d-990e-f081fa7af269"
+        }
+    })
 }
 
-async function generatePIX() {
-    try {
-        const response = await axios.post(
-            `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob`,
-            {
+function generatePIX() {
+    return axios({
+        method: "POST",
+        url: `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob`,
+        data: {
+            calendario: {
+                expiracao: 3600
+            },
+            valor: {
+                original: "20.00",
+                modalidadeAlteracao: 1
+            },
+            chave: "7d9f0335-8dcc-4054-9bf9-0dbd61d36906"
+        },
+        headers: {
+            "Authorization": `Bearer ${sandbox_token.value}`,
+            "x-itau-apikey": "d4b0717d-da08-3baa-adee-77eb85f59566", // client_id
+            "x-sandbox-token": sandbox_token.value
+        }
+    })
+}
+
+function generateQRCode() {
+    return axios({
+        url: `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob/${pix.txid}/qrcode`,
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${sandbox_token.value}`,
+            "x-itau-apikey": "d4b0717d-da08-3baa-adee-77eb85f59566", // client_id
+            "x-sandbox-token": sandbox_token.value
+        }
+    })
+}
+
+function confirmCheckout() {
+    axios({
+        method: "POST",
+        url: `https://devportal.itau.com.br/api/jwt`,
+        data: {
+            client_id: "d4b0717d-da08-3baa-adee-77eb85f59566",
+            client_secret: "f7ea714f-fdd7-4a4d-990e-f081fa7af269"
+        }
+    }).then((r => {
+        console.log(r.data.access_token)
+        this.sandbox_token = r.data.access_token
+        axios({
+            method: "POST",
+            url: `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob`,
+            data: {
                 calendario: {
                     expiracao: 3600
                 },
                 valor: {
-                    original: props.product.price * props.quantity,
+                    original: "20.00",
                     modalidadeAlteracao: 1
                 },
                 chave: "7d9f0335-8dcc-4054-9bf9-0dbd61d36906"
             },
-            {
-                headers: {
-                    "client_id": this.auth.client_id,
-                    "client_secret": this.auth.client_secret,
-                    "Authorization": `Bearer ${this.auth.sandbox_token}`,
-                    "x-itau-apikey": this.auth.client_id,
-                    "x-sandbox-token": this.auth.sandbox_token
-                }
+            headers: {
+                "Authorization": `Bearer ${sandbox_token.value}`,
+                "x-itau-apikey": "d4b0717d-da08-3baa-adee-77eb85f59566", // client_id
+                "x-sandbox-token": sandbox_token.value
             }
-        )
-
-        this.pix = response.data
-        console.log(this.pix)
-    } catch (e) {
-        console.error(e)
-    }
+        }).then((r) => {
+            this.pix = r.data
+            axios({
+                url: `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob/${pix.txid}/qrcode`,
+                method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${sandbox_token.value}`,
+                    "x-itau-apikey": "d4b0717d-da08-3baa-adee-77eb85f59566", // client_id
+                    "x-sandbox-token": sandbox_token.value
+                }
+            }).then((r) => {
+                this.qrCode = r.data.imagem_base64
+            })
+        })
+    }))
 
     this.step++
 }
 
-function copyPIX(text) {
-    navigator.clipboard.writeText(text)
-    alert('Chave copiada com sucesso.')
+function copyPIX() {
+    navigator.clipboard.writeText(pix.pixCopiaECola)
+    alert('PIX copiado com sucesso.')
 }
 
 async function generateNumbers() {
@@ -162,7 +212,7 @@ async function generateNumbers() {
 }
 
 function endCheckout() {
-    this.generateNumbers();
+    generateNumbers();
     this.step++
 }
 </script>
