@@ -42,7 +42,7 @@
             </p>
 
             <div class="border p-2 rounded w-48 aspect-square mt-4">
-                <img :src="'data:image\png;base64,' + qrCode" alt=""
+                <img v-if="qrCode" :src="'data:image\png;base64,' + qrCode" alt=""
                      class="w-full aspect-square">
             </div>
             <p class="mt-3 mb-1.5 font-semibold">Chave copia e cola:</p>
@@ -50,10 +50,11 @@
                 <div class="rounded-l border-emerald-400 border-dashed border-2 bg-gray-50 p-2 overflow-hidden">
                     <div class="flex flex-row justify-between gap-1">
                         <p class="text-emerald-400 font-bold whitespace-nowrap text-sm">
-                            {{ pix.pixCopiaECola || "" }}
+                            {{ pix.pixCopiaECola || "Gerando PIX, aguarde..." }}
                         </p>
                     </div>
                 </div>
+                {{pix.txid || ""}}
                 <button
                     class="bg-gray-200 grid place-items-center py-2 px-4 rounded-r border border-gray-300 cursor-pointer rounded-l-none"
                     @click="copyPIX()">
@@ -92,6 +93,7 @@ const step = ref(1);
 const qrCode = ref("");
 const sandbox_token = ref("");
 const pix = reactive({});
+const timer = ref(20);
 
 const props = defineProps({
     product: Object,
@@ -145,56 +147,30 @@ function generateQRCode() {
     })
 }
 
-function confirmCheckout() {
-    axios({
-        method: "POST",
-        url: `https://devportal.itau.com.br/api/jwt`,
-        data: {
-            client_id: "d4b0717d-da08-3baa-adee-77eb85f59566",
-            client_secret: "f7ea714f-fdd7-4a4d-990e-f081fa7af269"
-        }
-    }).then((r => {
-        console.log(r.data.access_token)
+function setPIX() {
+    this.generateToken().then((r) => {
         this.sandbox_token = r.data.access_token
-        axios({
-            method: "POST",
-            url: `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob`,
-            data: {
-                calendario: {
-                    expiracao: 3600
-                },
-                valor: {
-                    original: "20.00",
-                    modalidadeAlteracao: 1
-                },
-                chave: "7d9f0335-8dcc-4054-9bf9-0dbd61d36906"
-            },
-            headers: {
-                "Authorization": `Bearer ${sandbox_token.value}`,
-                "x-itau-apikey": "d4b0717d-da08-3baa-adee-77eb85f59566", // client_id
-                "x-sandbox-token": sandbox_token.value
-            }
-        }).then((r) => {
+
+        this.generatePIX().then((r) => {
             this.pix = r.data
-            axios({
-                url: `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob/${pix.txid}/qrcode`,
-                method: 'GET',
-                headers: {
-                    "Authorization": `Bearer ${sandbox_token.value}`,
-                    "x-itau-apikey": "d4b0717d-da08-3baa-adee-77eb85f59566", // client_id
-                    "x-sandbox-token": sandbox_token.value
-                }
-            }).then((r) => {
+
+            this.generateQRCode().then((r) => {
                 this.qrCode = r.data.imagem_base64
+                // this.countDownTimer()
             })
         })
-    }))
+    })
+}
+
+function confirmCheckout() {
+    this.setPIX()
+    this.countDownTimer()
 
     this.step++
 }
 
 function copyPIX() {
-    navigator.clipboard.writeText(pix.pixCopiaECola)
+    navigator.clipboard.writeText(this.pix.pixCopiaECola)
     alert('PIX copiado com sucesso.')
 }
 
@@ -214,5 +190,53 @@ async function generateNumbers() {
 function endCheckout() {
     generateNumbers();
     this.step++
+}
+
+function showPIX() {
+    return axios({
+        method: 'GET',
+        url: `${sandbox_url}/pix_recebimentos_ext_v2/v2/cob/${this.pix.txid}`,
+        data: {},
+        headers: {
+            "Authorization": `Bearer ${sandbox_token.value}`,
+            "x-itau-apikey": "d4b0717d-da08-3baa-adee-77eb85f59566", // client_id
+            "x-sandbox-token": sandbox_token.value
+        }
+    })
+}
+
+function countDownTimer() {
+    if (this.timer > 0) {
+        setTimeout(() => {
+            this.timer -= 1
+            console.log(this.timer)
+            this.countDownTimer()
+        }, 1000)
+    }
+
+    if (this.timer === 0) {
+        console.log('zerou')
+        try {
+            this.generateToken().then((r) => {
+                this.sandbox_token = r.data.access_token
+
+                this.showPIX().then((r) => {
+                    if (r.data.status === 'CONCLUIDA') {
+                        console.log('concluiu')
+                        this.endCheckout()
+                        this.timer = -1
+                    } else {
+                        this.timer = 20
+                        console.log('não concluiu')
+                        this.countDownTimer()
+                    }
+                })
+            })
+        } catch (e) {
+            this.timer = 30
+            console.log('deu erro')
+            this.countDownTimer()
+        }
+    }
 }
 </script>
