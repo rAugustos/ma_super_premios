@@ -9,7 +9,7 @@
             <div class="grid md:grid-cols-4 w-full gap-5 my-3" v-if="products">
                 <ProductCard v-for="product in products" :product="product" :key="product.id"/>
                 <div v-if="products.length < 4" v-for="i in (4 - products.length)"
-                     class="grid grid-cols-2 bg-slate-800 p-4 gap-4 md:gap-1 md:flex md:flex-row md:flex-col rounded-2xl md:relative">
+                     class="grid grid-cols-2 dark:bg-slate-800 dark:p-4 gap-4 md:gap-1 md:flex md:flex-row md:flex-col rounded-2xl md:relative">
                     <div class="relative">
                         <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
                              alt="" class="rounded-xl md:mb-2 shadow-xl md:shadow-md w-fit md:w-full"/>
