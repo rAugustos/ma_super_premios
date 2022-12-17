@@ -53,48 +53,50 @@
                             </a>
                         </div>
                     </div>
-                    <div class="my-4">
-                        <p class="text-lg font-bold dark:text-gray-300">Promoções</p>
-                        <div class="grid grid-cols-2 gap-2 mt-2 w-72">
-                            <button @click="quantity = 10"
-                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
-                                10 - R$ {{ 10 * product.share_price }}
-                            </button>
-                            <button @click="quantity = 20"
-                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
-                                20 - R$ {{ 20 * product.share_price }}
-                            </button>
-                            <button @click="quantity = 30"
-                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
-                                30 - R$ {{ 30 * product.share_price }}
-                            </button>
-                            <button @click="quantity = 40"
-                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
-                                40 - R$ {{ 40 * product.share_price }}
-                            </button>
+                    <div v-if="product.lucky_numbers_count < 90000">
+                        <div class="my-4">
+                            <p class="text-lg font-bold dark:text-gray-300">Promoções</p>
+                            <div class="grid grid-cols-2 gap-2 mt-2 w-72">
+                                <button @click="quantity = 10"
+                                        class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    10 - R$ {{ 10 * product.share_price }}
+                                </button>
+                                <button @click="quantity = 20"
+                                        class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    20 - R$ {{ 20 * product.share_price }}
+                                </button>
+                                <button @click="quantity = 30"
+                                        class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    30 - R$ {{ 30 * product.share_price }}
+                                </button>
+                                <button @click="quantity = 40"
+                                        class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    40 - R$ {{ 40 * product.share_price }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="my-2 flex flex-col">
+                            <p class="text-sm dark:text-gray-400">Total</p>
+                            <p class="text-2xl font-bold dark:text-gray-100">
+                                R$ {{ quantity * product.share_price }}
+                            </p>
+                            <div class="flex flex-row items-center gap-3 mt-3">
+                                <button
+                                    @click="decreaseQuantityByButtonsValue()"
+                                    class="rounded-full dark:text-gray-400 text-gray-700 border border-gray-300 place-items-center hover:text-red-500 hover:border-red-500 transition-all p-1 aspect-square">
+                                    -{{ product.buttons_value }}
+                                </button>
+                                <p class="dark:text-gray-300">{{ quantity }} cotas</p>
+                                <button @click="increaseQuantityByButtonsValue()"
+                                        class="rounded-full dark:text-gray-400 text-gray-700 aspect-square grid place-items-center border border-gray-300 hover:border-emerald-400 hover:text-emerald-400 p-1 transition-all">
+                                    +{{ product.buttons_value }}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="my-2 flex flex-col">
-                        <p class="text-sm dark:text-gray-400">Total</p>
-                        <p class="text-2xl font-bold dark:text-gray-100">
-                            R$ {{ quantity * product.share_price }}
-                        </p>
-                        <div class="flex flex-row items-center gap-3 mt-3">
-                            <button
-                                @click="decreaseQuantityByButtonsValue()"
-                                class="rounded-full dark:text-gray-400 text-gray-700 border border-gray-300 place-items-center hover:text-red-500 hover:border-red-500 transition-all p-1 aspect-square">
-                                -{{ product.buttons_value }}
-                            </button>
-                            <p class="dark:text-gray-300">{{ quantity }} cotas</p>
-                            <button @click="increaseQuantityByButtonsValue()"
-                                    class="rounded-full dark:text-gray-400 text-gray-700 aspect-square grid place-items-center border border-gray-300 hover:border-emerald-400 hover:text-emerald-400 p-1 transition-all">
-                                +{{ product.buttons_value }}
-                            </button>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex flex-row gap-4">
+                    <div class="mt-4 flex flex-row">
                         <Link :href="route('products.checkout', {'product': product.id, 'quantity': quantity})">
-                            <PrimaryButton :class="{'opacity-50': quantity == 0, 'cursor-not-allowed': quantity == 0}"
+                            <PrimaryButton class="mr-4" v-if="product.lucky_numbers_count < 90000" :class="{'opacity-50': quantity == 0, 'cursor-not-allowed': quantity == 0}"
                                            :disabled="quantity == 0">Prosseguir <i class="bi bi-cart-check"></i>
                             </PrimaryButton>
                         </Link>
@@ -129,6 +131,11 @@ const quantity = ref(0)
 
 function increaseQuantityByButtonsValue() {
     this.quantity += props.product.buttons_value
+
+    if (this.quantity >= (90000 - props.product.lucky_numbers_count)) {
+        alert('Quantia máxima de números para o sorteio atingida.')
+        this.quantity = (90000 - props.product.lucky_numbers_count)
+    }
 }
 
 function decreaseQuantityByButtonsValue() {

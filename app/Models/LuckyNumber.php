@@ -14,6 +14,7 @@ class LuckyNumber extends Model
         'product_id',
         'user_id',
         'number',
+        'is_winner'
     ];
 
     public function user()

@@ -4,7 +4,7 @@
         <div class="relative">
             <img
                 :src="'/storage/' + product.images[0].path"
-                alt="" class="rounded-xl md:mb-2 shadow-xl md:shadow-lg w-fit md:w-full"/>
+                alt="" class="rounded-xl md:mb-2 shadow-xl md:shadow-lg w-fit md:w-full md:h-36 object-cover"/>
 
         </div>
         <div class="flex flex-col">
