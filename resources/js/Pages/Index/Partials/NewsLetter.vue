@@ -5,7 +5,7 @@
             <p class="block text-emerald-400">Assine a nossa newsletter.</p>
         </h2>
         <div class="mt-3 flex flex-col">
-            <div>
+            <div class="mb-3">
                 <InputLabel for="email" value="Digite seu e-mail"/>
                 <TextInput id="email"
                            type="email"
