@@ -4,12 +4,28 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-100 pl-4 sm:pl-0">Dados do usuário</h2>
         </template>
         <div class="container mx-auto max-w-screen-lg sm:py-6 py:4">
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">Nome:</span> {{ user.name }}</p></div>
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">E-mail:</span> {{ user.email }}</p></div>
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">Telefone:</span> {{ user.phone }}</p></div>
-            <div><p class="font-semibold"><span class="font-normal text-gray-500">CPF:</span> {{ user.document || 'Não informado' }}</p></div>
+            <div>
+                <p class="font-semibold dark:text-gray-200">
+                    <span class="font-normal text-gray-500 dark:text-gray-300">Nome:</span> {{ user.name }}
+                </p>
+            </div>
+            <div>
+                <p class="font-semibold dark:text-gray-200">
+                    <span class="font-normal text-gray-500 dark:text-gray-300">E-mail:</span> {{ user.email }}
+                </p>
+            </div>
+            <div>
+                <p class="font-semibold dark:text-gray-200">
+                    <span class="font-normal text-gray-500 dark:text-gray-300">Telefone:</span> {{ user.phone }}
+                </p>
+            </div>
+            <div>
+                <p class="font-semibold dark:text-gray-200">
+                    <span class="font-normal text-gray-500 dark:text-gray-300">CPF:</span> {{ user.document || 'Não informado' }}
+                </p>
+            </div>
             <hr class="my-4">
-            <p class="font-semibold text-lg">Sorteios</p>
+            <p class="font-semibold text-lg dark:text-gray-100">Sorteios</p>
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-2">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

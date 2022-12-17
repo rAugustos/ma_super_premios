@@ -25,6 +25,7 @@ class UserFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'document' => fake()->text(12),
             'remember_token' => Str::random(10),
+            'is_admin' => true,
         ];
     }
 

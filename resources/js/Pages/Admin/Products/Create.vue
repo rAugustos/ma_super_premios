@@ -2,7 +2,7 @@
     <AdminLayout>
         <div class="container mx-auto max-w-screen-md p-5">
             <form @submit.prevent="submit()">
-                <h1 class="font-bold text-3xl">Criação de sorteio</h1>
+                <h1 class="font-bold text-3xl dark:text-gray-100">Criação de sorteio</h1>
 
                 <!--                @error('images')-->
                 <!--                <div class="bg-red-100 border border-red-400 p-4 rounded-lg mt-3">-->
@@ -97,7 +97,7 @@
                             v-model="form.buttons_value"
                         />
                         <InputError class="mt-2" :message="form.errors.buttons_value"/>
-                        <p class="text-sm text-gray-600">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
                             quantia de números da sorte que será adicionada / removida usando os botões de + e -
                         </p>
                     </div>
@@ -116,7 +116,7 @@
                 <!--                    </div>-->
                 <!--                </div>-->
 
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Criar
+                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Criar
                     sorteio
                 </PrimaryButton>
             </form>

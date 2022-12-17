@@ -43,7 +43,6 @@ const submit = () => {
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
-                    required
                     autofocus
                     autocomplete="username"
                 />
@@ -59,8 +58,6 @@ const submit = () => {
                     type="tel"
                     class="mt-1 block w-full"
                     v-model="form.phone"
-                    required
-                    autofocus
                     autocomplete="phone"
                 />
 
@@ -75,7 +72,6 @@ const submit = () => {
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password"
-                    required
                     autocomplete="current-password"
                 />
 
@@ -85,14 +81,14 @@ const submit = () => {
             <div class="block">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember"/>
-                    <span class="ml-2 text-sm text-gray-600">Lembre-se de mim</span>
+                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-300 font-medium">Lembre-se de mim</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end">
                 <Link
                     :href="route('register')"
-                    class="underline mr-2 text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="underline mr-2 text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:text-gray-400"
                 >
                     Não possui conta?
                 </Link>
@@ -100,7 +96,7 @@ const submit = () => {
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:text-gray-400"
                 >
                     Esqueceu sua senha?
                 </Link>

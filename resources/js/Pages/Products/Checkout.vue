@@ -1,5 +1,4 @@
 <template>
-    <!--    TODO: colocar tudo num <authenticated-layout-->
     <AuthenticatedLayout>
         <div class="container mx-auto max-w-[35rem] p-5 relative">
             <div v-if="step===1">
