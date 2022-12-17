@@ -19,12 +19,12 @@
                     </div>
                 </div>
                 <div class="col-span-3">
-                    <p class="text-2xl font-bold">{{ product.name }}</p>
+                    <p class="text-2xl font-bold dark:text-gray-100">{{ product.name }}</p>
                     <div class="bg-emerald-400 px-2 py-1 rounded-xl my-2 w-fit">
                         <p class="font-semibold">R$ {{ product.share_price }}</p>
                     </div>
                     <div class="my-4">
-                        <p class="text-lg font-bold">Compartilhe</p>
+                        <p class="text-lg font-bold dark:text-gray-300">Compartilhe</p>
                         <div class="flex flex-row gap-3 mt-2">
                             <a :href="'https://www.facebook.com/sharer/sharer.php?u=' + url"
                                class="rounded-full cursor-pointer p-0 bg-blue-500 grid place-items-center text-white w-10 aspect-square">
@@ -45,50 +45,50 @@
                         </div>
                     </div>
                     <div class="my-4">
-                        <p class="text-lg font-bold">Promoções</p>
+                        <p class="text-lg font-bold dark:text-gray-300">Promoções</p>
                         <div class="grid grid-cols-2 gap-2 mt-2 w-72">
                             <button @click="quantity = 10"
-                                    class="border text-gray-700 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
                                 10 - R$ {{ 10 * product.share_price }}
                             </button>
                             <button @click="quantity = 20"
-                                    class="border text-gray-700 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
                                 20 - R$ {{ 20 * product.share_price }}
                             </button>
                             <button @click="quantity = 30"
-                                    class="border text-gray-700 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
                                 30 - R$ {{ 30 * product.share_price }}
                             </button>
                             <button @click="quantity = 40"
-                                    class="border text-gray-700 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
+                                    class="border text-gray-700 dark:text-gray-400 font-normal border-gray-300 px-3 cursor-pointer py-1 rounded-lg hover:border-emerald-400 hover:text-emerald-400 transition-all">
                                 40 - R$ {{ 40 * product.share_price }}
                             </button>
                         </div>
                     </div>
                     <div class="my-2 flex flex-col">
-                        <p class="text-sm">Total</p>
-                        <p class="text-2xl font-bold">
+                        <p class="text-sm dark:text-gray-400">Total</p>
+                        <p class="text-2xl font-bold dark:text-gray-100">
                             R$ {{ quantity * product.share_price }}
                         </p>
                         <div class="flex flex-row items-center gap-3 mt-3">
                             <button
                                 @click="quantity = quantity >= product.buttons_value ? quantity - product.buttons_value : 0"
-                                class="rounded-full text-gray-700 border border-gray-300 place-items-center hover:text-red-500 hover:border-red-500 transition-all p-1 aspect-square">
+                                class="rounded-full dark:text-gray-400 text-gray-700 border border-gray-300 place-items-center hover:text-red-500 hover:border-red-500 transition-all p-1 aspect-square">
                                 -{{ product.buttons_value }}
                             </button>
-                            <p>{{ quantity }} cotas</p>
+                            <p class="dark:text-gray-300">{{ quantity }} cotas</p>
                             <button @click="quantity += product.buttons_value"
-                                    class="rounded-full text-gray-700 aspect-square grid place-items-center border border-gray-300 hover:border-emerald-400 hover:text-emerald-400 p-1 transition-all">
+                                    class="rounded-full dark:text-gray-400 text-gray-700 aspect-square grid place-items-center border border-gray-300 hover:border-emerald-400 hover:text-emerald-400 p-1 transition-all">
                                 +{{ product.buttons_value }}
                             </button>
                         </div>
                     </div>
-                    <div class="mt-5 flex flex-row gap-2 items-center">
+                    <div class="mt-4 flex flex-row gap-4">
                         <Link :href="route('products.checkout', {'product': product.id, 'quantity': quantity})">
                             <PrimaryButton>Prosseguir <i class="bi bi-cart-check"></i></PrimaryButton>
                         </Link>
                         <Link :href="route('numbers')">
-                            <SecondaryButton>Ver meus números</SecondaryButton>
+                            <SecondaryButton>Meus números</SecondaryButton>
                         </Link>
                     </div>
                 </div>

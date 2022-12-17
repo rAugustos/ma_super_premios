@@ -12,8 +12,8 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-50">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen bg-gray-50 dark:bg-slate-900">
+            <nav class="bg-white dark:bg-slate-900 border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-screen-lg mx-auto">
                     <div class="flex justify-between h-16">
@@ -44,7 +44,7 @@ const showingNavigationDropdown = ref(false);
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                class="inline-flex items-center px-3 py-2 dark:text-gray-300 dark:hover:text-gray-400 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-slate-900 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {{ $page.props.auth.user.name }}
 
@@ -65,8 +65,8 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Perfil</DropdownLink>
-                                        <DropdownLink :href="route('numbers')">Seus sorteios</DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')">Perfil</DropdownLink>
+                                        <DropdownLink :href="route('numbers')">Meus sorteios</DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Encerrar sessão
                                         </DropdownLink>
@@ -92,7 +92,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="-mr-2 flex items-center sm:hidden">
                             <button
                                 @click="showingNavigationDropdown = !showingNavigationDropdown"
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:bg-slate-900 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
                             >
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -135,14 +135,17 @@ const showingNavigationDropdown = ref(false);
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200" v-if="$page.props.auth.user">
                         <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">
+                            <div class="font-medium text-base text-gray-800 dark:text-gray-200">
                                 {{ $page.props.auth.user.name }}
                             </div>
-                            <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
+                            <div class="font-medium text-sm text-gray-500 dark:text-gray-400">
+                                {{ $page.props.auth.user.email }}
+                            </div>
                         </div>
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')"> Perfil</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('numbers')">Meus sorteios</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Encerrar sessão
                             </ResponsiveNavLink>
@@ -152,7 +155,7 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
+            <header class="bg-white dark:bg-slate-900 shadow" v-if="$slots.header">
                 <div class="max-w-screen-lg mx-auto py-6">
                     <slot name="header"/>
                 </div>
@@ -164,7 +167,7 @@ const showingNavigationDropdown = ref(false);
             </main>
 
             <div
-                class="h-80 container mx-auto max-w-screen-lg flex flex-col items-center justify-center text-gray-500 border-t">
+                class="h-48 md:h-80 container mx-auto max-w-screen-lg flex flex-col items-center justify-center text-gray-500 border-t">
                 <div class="flex flex-row gap-4">
                     <Link>Home</Link>
                     <Link>Sorteios</Link>
@@ -178,7 +181,7 @@ const showingNavigationDropdown = ref(false);
                     <i class="bi bi-telegram text-xl hover:text-blue-500 cursor-pointer"></i>
                     <i class="bi bi-twitter text-xl hover:text-blue-500 cursor-pointer"></i>
                 </div>
-                <p>&copy; MA Super Prêmios {{ new Date().getFullYear() }}. Todos os direitos reservados.</p>
+                <p class="">&copy; MA Super Prêmios {{ new Date().getFullYear() }}. Todos os direitos reservados.</p>
             </div>
         </div>
     </div>

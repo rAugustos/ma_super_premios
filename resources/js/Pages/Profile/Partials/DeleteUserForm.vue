@@ -40,9 +40,9 @@ const closeModal = () => {
 <template>
     <section class="space-y-6">
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Deleção de conta</h2>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Deleção de conta</h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 Uma vez deletada, sua conta e todas as suas informações serão apagadas permanentemente. Tenha certeza do
                 que está fazendo antes de prosseguir.
             </p>
@@ -52,11 +52,11 @@ const closeModal = () => {
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
-                <h2 class="text-lg font-medium text-gray-900">
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                     Tem certeza de que deseja apagar a sua conta?
                 </h2>
 
-                <p class="mt-1 text-sm text-gray-600">
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     Uma vez deletada, sua conta e todas as suas informações serão apagadas permanentemente. Tenha
                     certeza do
                     que está fazendo antes de prosseguir.
@@ -70,7 +70,7 @@ const closeModal = () => {
                         ref="passwordInput"
                         v-model="form.password"
                         type="password"
-                        class="mt-1 block w-3/4"
+                        class="mt-1 block w-full"
                         @keyup.enter="deleteUser"
                     />
 

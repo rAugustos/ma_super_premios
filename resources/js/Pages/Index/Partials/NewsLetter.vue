@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col container max-w-screen-lg mx-auto my-4 p-5 sm:py-5 sm:px-0">
+    <div class="flex flex-col container max-w-screen-lg mx-auto p-5 py-10 sm:px-0 dark:bg-slate-900">
         <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             <p class="block dark:text-gray-200">Quer ser informado sobre novos sorteios?</p>
             <p class="block text-emerald-400">Assine a nossa newsletter.</p>
@@ -10,6 +10,7 @@
                 <TextInput id="email"
                            type="email"
                            class="mt-1 block w-full md:w-96"
+                           placeholder="examplo@exemplo.com"
                            v-model="form.email"/>
                 <InputError :message="form.errors.email"/>
             </div>

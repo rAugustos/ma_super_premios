@@ -25,8 +25,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    $products = Product::limit(5)->get();
-    $products->load('images');
+    $products = Product::with(['images', 'luckyNumbers'])->limit(4)->get();
 
     return inertia('Index/Index', [
         'products' => $products,

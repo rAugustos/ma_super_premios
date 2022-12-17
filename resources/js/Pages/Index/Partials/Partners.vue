@@ -1,10 +1,10 @@
 <template>
-    <div class="pb-14 pt-10 px-4">
+    <div class="pb-14 pt-10 px-6 sm:px-4 dark:bg-slate-900">
         <div class="container mx-auto max-w-screen-lg">
             <div class="flex flex-col">
-            <span class="text-3xl font-bold text-center mb-5 dark:text-gray-300">Parceiros</span>
+            <p class="text-3xl font-bold dark:text-gray-300">Nossos Parceiros</p>
             </div>
-            <div class="grid sm:grid-cols-3 gap-6 mt-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-6 mt-6 md:dark:bg-transparent md:p-0 md:mt-10 dark:bg-slate-800 p-6 rounded-2xl">
                 <img
                     v-for="i in 6"
                     :key="i"

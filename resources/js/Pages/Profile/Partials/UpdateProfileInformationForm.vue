@@ -16,14 +16,16 @@ const user = usePage().props.value.auth.user;
 const form = useForm({
     name: user.name,
     email: user.email,
+    phone: user.phone,
+    document: user.document,
 });
 </script>
 
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Info. de perfil</h2>
-            <p class="mt-1 text-sm text-gray-600">Atualize as info. do seu perfil pessoal e seu e-mail.</p>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Info. de perfil</h2>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Atualize as info. do seu perfil pessoal e seu e-mail.</p>
         </header>
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
@@ -35,7 +37,6 @@ const form = useForm({
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
-                    required
                     autofocus
                     autocomplete="name"
                 />
@@ -44,18 +45,43 @@ const form = useForm({
             </div>
 
             <div>
-                <InputLabel for="email" value="E-mail"/>
+                <InputLabel for="email" value="Telefone"/>
+
+                <TextInput
+                    id="phone"
+                    type="tel"
+                    class="mt-1 block w-full"
+                    v-model="form.phone"
+                />
+
+                <InputError class="mt-2" :message="form.errors.phone"/>
+            </div>
+
+            <div>
+                <InputLabel for="name" value="E-mail"/>
 
                 <TextInput
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
-                    required
-                    autocomplete="email"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email"/>
+            </div>
+
+            <div>
+                <InputLabel for="name" value="CPF (opcional)"/>
+
+                <TextInput
+                    id="document"
+                    type="tel"
+                    class="mt-1 block w-full"
+                    v-model="form.document"
+                    v-mask="'###.###.###-##'"
+                />
+
+                <InputError class="mt-2" :message="form.errors.document"/>
             </div>
 
             <div v-if="props.mustVerifyEmail && user.email_verified_at === null">

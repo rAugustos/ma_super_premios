@@ -3,15 +3,12 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-100 pl-4 sm:pl-0">
                 Sorteios
             </h2>
         </template>
         <div class="container mx-auto max-w-screen-lg p-5">
-            <!--            <h1 class="font-bold text-3xl mt-8">-->
-            <!--                Sorteios-->
-            <!--            </h1>-->
-            <div class="grid sm:grid-cols-3 gap-4 mb-4 mt-8">
+            <div class="grid sm:grid-cols-3 gap-4 mb-4 md:mt-8">
                 <ProductCard v-for="product in products.data" :key="product.id" :product="product"/>
             </div>
         </div>

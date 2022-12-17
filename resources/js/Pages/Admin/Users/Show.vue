@@ -1,7 +1,7 @@
 <template>
     <AdminLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dados do usuário</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-100 pl-4 sm:pl-0">Dados do usuário</h2>
         </template>
         <div class="container mx-auto max-w-screen-lg sm:py-6 py:4">
             <div><p class="font-semibold"><span class="font-normal text-gray-500">Nome:</span> {{ user.name }}</p></div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-emerald-400 py-12 p-5">
+    <div class="bg-emerald-500 py-12 p-5">
         <div class="container mx-auto max-w-screen-lg flex flex-col">
         <span class="font-bold text-3xl mb-8 mt-1">
             Como posso concorrer aos prêmios?

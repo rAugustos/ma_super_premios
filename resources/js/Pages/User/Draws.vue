@@ -1,7 +1,7 @@
 <template>
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Seus sorteios</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-100 pl-4 sm:pl-0">Seus sorteios</h2>
         </template>
         <div class="container mx-auto max-w-screen-lg sm:py-6 py:4">
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-2">
@@ -33,10 +33,10 @@
             </div>
             <Modal :show="showNumbers" @close="showNumbers = false">
                 <div class="p-6">
-                    <h2 class="text-lg font-medium text-gray-900">
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                         Números do sorteio: {{ products[productIndex].name }}
                     </h2>
-                    <p class="mt-1 text-sm text-gray-500">
+                    <p class="mt-1 md:text-sm text-gray-500 dark:text-gray-400">
                         <span v-for="luckyNumber in products[productIndex].lucky_numbers">
                             {{ luckyNumber.number }},
                         </span>

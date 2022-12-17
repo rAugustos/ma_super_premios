@@ -1,23 +1,21 @@
 <template>
-    <Link :href="route('products.show', product.id)" class="flex flex-col w-full">
+    <Link :href="route('products.show', product.id)"
+          class="grid grid-cols-2 bg-slate-800 p-4 gap-4 md:gap-1 md:flex md:flex-row md:flex-col rounded-2xl md:relative">
         <div class="relative">
             <img
                 :src="'/storage/' + product.images[0].path"
-                alt="" class="rounded-lg w-full sm:max-h-44 object-cover mb-2 border shadow-sm" />
-            <!--            <div-->
-            <!--                class="absolute top-2 right-2 bg-{{ $count >= 90000 ? 'red' : 'emerald' }}-500 px-2 rounded-md text-white text-sm font-semibold">-->
-            <!--                <p>-->
-            <!--                    {{ $count >= 90000 ? 'Finalizado' : 'Disponível' }}-->
-            <!--                </p>-->
-            <!--            </div>-->
+                alt="" class="rounded-xl md:mb-2 shadow-xl md:shadow-md w-fit md:w-full"/>
+
         </div>
-        <div class="px-2 flex flex-col">
-        <span class="font-bold dark:text-gray-100">
-            {{ product.name }}
-        </span>
-            <span class="dark:text-gray-300">
-            R$ {{ product.share_price }} / número
-        </span>
+        <div class="flex flex-col">
+            <div
+                class="rounded-md px-2 w-fit py-0.5 bg-slate-600 text-white text-sm mb-1">
+                <p class="font-medium"><!--                    {{ product.luckyNumbers.length >= 90000 ? 'Finalizado' : 'Disponível' }}-->
+                    Finalizado
+                </p>
+            </div>
+            <p class="font-bold dark:text-gray-100">{{ product.name }}</p>
+            <p class="dark:text-gray-300">R$ {{ product.share_price }} / número</p>
         </div>
     </Link>
 </template>

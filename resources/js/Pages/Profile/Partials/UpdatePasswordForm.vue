@@ -36,9 +36,9 @@ const updatePassword = () => {
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Atualização de senha</h2>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Atualização de senha</h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 Tenha certeza de que você está usando uma senha longa e complexa para garantir a sua segurança.
             </p>
         </header>

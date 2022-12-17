@@ -1,88 +1,93 @@
 <template>
     <!--    TODO: colocar tudo num <authenticated-layout-->
-    <div class="container mx-auto max-w-[35rem] p-5 relative">
-        <div v-if="step===1">
-            <p class="font-bold text-3xl">Confirmação do pedido</p>
-            <p class="text-gray-500 text-sm mt-2">
-                Valide os dados do seu pedido, caso tudo esteja de acordo clique em continuar, caso queira voltar para
-                a tela do sorteio para fazer alguma alteração, clique em voltar.
-            </p>
-            <div class="my-4">
-                <div>
-                    <img
-                        src="https://quatrorodas.abril.com.br/wp-content/uploads/2018/04/corolla_gli_2019.jpg?quality=70&strip=info"
-                        alt="" srcset="" class="rounded-2xl">
-                </div>
-                <div class="flex flex-col mt-3">
-                    <p class="font-bold text-lg">{{ product.name }}</p>
-                    <p>R$ {{ product.share_price }} / número</p>
-                    <p>{{ quantity }} números</p>
-                </div>
-            </div>
-            <hr>
-            <div class="my-4">
-                <p class="text-sm">Total</p>
-                <p class="font-bold text-lg">R$ {{ product.share_price * quantity }}</p>
-                <div class="flex flex-row gap-3 mt-2">
-                    <PrimaryButton @click="confirmCheckout()">Prosseguir</PrimaryButton>
-                    <SecondaryButton>Voltar</SecondaryButton>
-                </div>
-            </div>
-        </div>
-        <div v-if="step===2">
-            <button @click="step--"
-                    class="text-gray-600 text-sm flex flex-row items-center gap-2 rounded-lg mb-2 hover:bg-gray-100 w-fit px-2 py-1 cursor-pointer">
-                <i class="bi bi-chevron-left"></i> Voltar
-            </button>
-            <p class="font-bold text-3xl">Pagamento</p>
-            <p class="text-gray-500 text-sm mt-2">
-                Para finalizarmos o checkout e você receber os seus números da sorte, é preciso efetuar o pagamento via
-                PIX.
-                Você pode utilizar tanto o QR code quanto a chave copia e cola.
-            </p>
-
-            <div class="border p-2 rounded w-48 aspect-square mt-4">
-                <img v-if="qrCode" :src="'data:image\png;base64,' + qrCode" alt=""
-                     class="w-full aspect-square">
-
-                <img v-else src="https://acesso.gov.br/faq/_images/imagem_qrcode_exemplo.jpg" alt=""
-                     class="w-full p-2 blur-sm aspect-square">
-            </div>
-            <p class="mt-3 mb-1.5 font-semibold">Chave copia e cola:</p>
-            <div class="flex flex-row w-full">
-                <div class="rounded-l border-emerald-400 border-dashed border-2 bg-gray-50 p-2 overflow-hidden w-full">
-                    <div class="flex flex-row justify-between gap-1">
-                        <p class="text-emerald-400 font-bold whitespace-nowrap text-sm">
-                            {{ pix.pixCopiaECola || "Gerando PIX, aguarde..." }}
-                        </p>
+    <AuthenticatedLayout>
+        <div class="container mx-auto max-w-[35rem] p-5 relative">
+            <div v-if="step===1">
+                <p class="font-bold text-3xl dark:text-gray-100">Confirmação do pedido</p>
+                <p class="text-gray-500 md:text-sm mt-2 dark:text-gray-400">
+                    Valide os dados do seu pedido, caso tudo esteja de acordo clique em continuar, caso queira voltar
+                    para
+                    a tela do sorteio para fazer alguma alteração, clique em voltar.
+                </p>
+                <div class="my-4">
+                    <div>
+                        <img
+                            src="https://quatrorodas.abril.com.br/wp-content/uploads/2018/04/corolla_gli_2019.jpg?quality=70&strip=info"
+                            alt="" srcset="" class="rounded-2xl">
+                    </div>
+                    <div class="flex flex-col mt-3">
+                        <p class="font-bold text-lg dark:text-gray-100">{{ product.name }}</p>
+                        <p class="dark:text-gray-400">R$ {{ product.share_price }} / número</p>
+                        <p class="dark:text-gray-400">{{ quantity }} números</p>
                     </div>
                 </div>
-                <!--                {{pix.txid || ""}}-->
-                <button
-                    class="bg-gray-200 grid place-items-center py-2 px-4 rounded-r border border-gray-300 cursor-pointer rounded-l-none"
-                    @click="copyPIX()">
-                    <i class="bi bi-clipboard text-gray-600"></i>
-                </button>
+                <hr>
+                <div class="my-4">
+                    <p class="md:text-sm dark:text-gray-400">Total</p>
+                    <p class="font-bold text-lg dark:text-gray-100">R$ {{ product.share_price * quantity }}</p>
+                    <div class="flex flex-row gap-3 mt-2">
+                        <PrimaryButton @click="confirmCheckout()">Prosseguir</PrimaryButton>
+                        <SecondaryButton>Voltar</SecondaryButton>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div v-if="step===3">
-            <div class="flex flex-col items-center text-center">
-                <img src="https://openjournalsystems.com/file/2017/07/payment-success.png" alt="">
-                <div class="">
-                    <h1 class="font-bold text-2xl mt-2">Pagamento confirmado</h1>
-                    <p class="text-gray-600">
-                        Seu pagamento foi confirmado e
-                        seus números foram gerados!
-                        <br>
-                        Cruze os dedos e boa sorte!
-                    </p>
-                    <Link :href="route('numbers')">
-                        <PrimaryButton>Ver meus sorteios</PrimaryButton>
-                    </Link>
+            <div v-if="step===2">
+                <button @click="step--"
+                        class="text-gray-600 md:text-sm flex flex-row items-center gap-2 rounded-lg mb-2 hover:bg-gray-100 w-fit px-2 py-1 cursor-pointer">
+                    <i class="bi bi-chevron-left"></i> Voltar
+                </button>
+                <p class="font-bold text-3xl dark:text-gray-100">Pagamento</p>
+                <p class="text-gray-500 md:text-sm mt-2 dark:text-gray-400">
+                    Para finalizarmos o checkout e você receber os seus números da sorte, é preciso efetuar o pagamento
+                    via
+                    PIX.
+                    Você pode utilizar tanto o QR code quanto a chave copia e cola.
+                </p>
+
+                <div class="border dark:border-slate-700 p-2 rounded-lg w-48 aspect-square mt-4">
+                    <img v-if="qrCode" :src="'data:image\png;base64,' + qrCode" alt=""
+                         class="w-full aspect-square">
+
+                    <img v-else src="https://acesso.gov.br/faq/_images/imagem_qrcode_exemplo.jpg" alt=""
+                         class="w-full p-2 blur-sm aspect-square">
+                </div>
+                <p class="mt-3 mb-1.5 font-semibold dark:text-gray-100">Chave copia e cola:</p>
+                <div class="flex flex-row w-full">
+                    <div
+                        class="rounded-l border-emerald-400 border-dashed border-2 bg-gray-50 dark:bg-transparent p-2 overflow-hidden w-full">
+                        <div class="flex flex-row justify-between gap-1">
+                            <p class="text-emerald-400 font-bold whitespace-nowrap text-sm">
+                                {{ pix.pixCopiaECola || "Gerando PIX, aguarde..." }}
+                            </p>
+                        </div>
+                    </div>
+                    <!--                {{pix.txid || ""}}-->
+                    <button
+                        class="bg-gray-200 grid place-items-center py-2 px-4 dark:bg-slate-800 rounded-r border border-gray-300 cursor-pointer rounded-l-none"
+                        @click="copyPIX()">
+                        <i class="bi bi-clipboard text-gray-600 dark:text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+            <div v-if="step===3">
+                <div class="flex flex-col items-center text-center">
+                    <img src="https://openjournalsystems.com/file/2017/07/payment-success.png" alt="">
+                    <div class="">
+                        <h1 class="font-bold text-2xl mt-2 dark:text-gray-100">Pagamento confirmado</h1>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Seu pagamento foi confirmado e
+                            seus números foram gerados!
+                            <br>
+                            Cruze os dedos e boa sorte!
+                        </p>
+                        <Link :href="route('numbers')">
+                            <PrimaryButton>Ver meus sorteios</PrimaryButton>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </AuthenticatedLayout>
 </template>
 
 <script setup>
@@ -91,6 +96,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {Link} from '@inertiajs/inertia-vue3'
 import axios from "axios"
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 const step = ref(1);
 const qrCode = ref("");
