@@ -26,6 +26,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product->load('images');
+        $product->loadCount('luckyNumbers');
         return inertia('Products/Show', ['product' => $product, 'url' => request()->url()]);
     }
 }

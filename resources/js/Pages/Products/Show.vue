@@ -20,8 +20,17 @@
                 </div>
                 <div class="col-span-3">
                     <p class="text-2xl font-bold dark:text-gray-100">{{ product.name }}</p>
-                    <div class="bg-emerald-400 px-2 py-1 rounded-xl my-2 w-fit">
-                        <p class="font-semibold">R$ {{ product.share_price }}</p>
+                    <div class="flex flex-row gap-3">
+                        <div class="bg-emerald-400 px-3 py-1 rounded-md my-2 w-fit">
+                            <p class="font-semibold">R$ {{ product.share_price }}</p>
+                        </div>
+                        <div
+                            :class="{'bg-red-600': product.lucky_numbers_count > 0, 'text-white': product.lucky_numbers_count > 0}"
+                            class="border-red-500 px-3 py-1 rounded-md my-2 w-fit">
+                            <p class="font-semibold">
+                                {{ product.lucky_numbers_count }} números vendidos
+                            </p>
+                        </div>
                     </div>
                     <div class="my-4">
                         <p class="text-lg font-bold dark:text-gray-300">Compartilhe</p>
@@ -72,12 +81,12 @@
                         </p>
                         <div class="flex flex-row items-center gap-3 mt-3">
                             <button
-                                @click="quantity = quantity >= product.buttons_value ? quantity - product.buttons_value : 0"
+                                @click="decreaseQuantityByButtonsValue()"
                                 class="rounded-full dark:text-gray-400 text-gray-700 border border-gray-300 place-items-center hover:text-red-500 hover:border-red-500 transition-all p-1 aspect-square">
                                 -{{ product.buttons_value }}
                             </button>
                             <p class="dark:text-gray-300">{{ quantity }} cotas</p>
-                            <button @click="quantity += product.buttons_value"
+                            <button @click="increaseQuantityByButtonsValue()"
                                     class="rounded-full dark:text-gray-400 text-gray-700 aspect-square grid place-items-center border border-gray-300 hover:border-emerald-400 hover:text-emerald-400 p-1 transition-all">
                                 +{{ product.buttons_value }}
                             </button>
@@ -85,7 +94,9 @@
                     </div>
                     <div class="mt-4 flex flex-row gap-4">
                         <Link :href="route('products.checkout', {'product': product.id, 'quantity': quantity})">
-                            <PrimaryButton>Prosseguir <i class="bi bi-cart-check"></i></PrimaryButton>
+                            <PrimaryButton :class="{'opacity-50': quantity == 0, 'cursor-not-allowed': quantity == 0}"
+                                           :disabled="quantity == 0">Prosseguir <i class="bi bi-cart-check"></i>
+                            </PrimaryButton>
                         </Link>
                         <Link :href="route('numbers')">
                             <SecondaryButton>Meus números</SecondaryButton>
@@ -115,4 +126,12 @@ const props = defineProps({
 const image = ref(props.product.images[0].path);
 
 const quantity = ref(0)
+
+function increaseQuantityByButtonsValue() {
+    this.quantity += props.product.buttons_value
+}
+
+function decreaseQuantityByButtonsValue() {
+    this.quantity = this.quantity >= props.product.buttons_value ? this.quantity - props.product.buttons_value : 0
+}
 </script>
