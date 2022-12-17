@@ -44,17 +44,20 @@
             <div class="border p-2 rounded w-48 aspect-square mt-4">
                 <img v-if="qrCode" :src="'data:image\png;base64,' + qrCode" alt=""
                      class="w-full aspect-square">
+
+                <img v-else src="https://acesso.gov.br/faq/_images/imagem_qrcode_exemplo.jpg" alt=""
+                     class="w-full p-2 blur-sm aspect-square">
             </div>
             <p class="mt-3 mb-1.5 font-semibold">Chave copia e cola:</p>
             <div class="flex flex-row w-full">
-                <div class="rounded-l border-emerald-400 border-dashed border-2 bg-gray-50 p-2 overflow-hidden">
+                <div class="rounded-l border-emerald-400 border-dashed border-2 bg-gray-50 p-2 overflow-hidden w-full">
                     <div class="flex flex-row justify-between gap-1">
                         <p class="text-emerald-400 font-bold whitespace-nowrap text-sm">
                             {{ pix.pixCopiaECola || "Gerando PIX, aguarde..." }}
                         </p>
                     </div>
                 </div>
-                {{pix.txid || ""}}
+                <!--                {{pix.txid || ""}}-->
                 <button
                     class="bg-gray-200 grid place-items-center py-2 px-4 rounded-r border border-gray-300 cursor-pointer rounded-l-none"
                     @click="copyPIX()">
@@ -164,7 +167,7 @@ function setPIX() {
 
 function confirmCheckout() {
     this.setPIX()
-    this.countDownTimer()
+    // this.countDownTimer()
 
     this.step++
 }
@@ -174,17 +177,16 @@ function copyPIX() {
     alert('PIX copiado com sucesso.')
 }
 
-async function generateNumbers() {
-    try {
-        const response = await axios.post(route('generate-numbers', {
+function generateNumbers() {
+    axios({
+        method: 'POST',
+        url: route('generate-numbers', {
             product_id: props.product.id,
             quantity: props.quantity
-        }))
-
-        console.log(response.data)
-    } catch (error) {
-        console.error(error);
-    }
+        })
+    }).then((r) => {
+        console.log(r.data)
+    })
 }
 
 function endCheckout() {
