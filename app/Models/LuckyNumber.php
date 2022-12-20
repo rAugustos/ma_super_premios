@@ -30,7 +30,9 @@ class LuckyNumber extends Model
     public static function generateNumber($id)
     {
         $isGenerating = true;
-
+//        while(User::where('id', $randomCode)->count() > 0) {
+//            $randomCode = mt_rand();
+//        }
         while ($isGenerating) {
             $number = DB::scalar('
             SELECT random_num

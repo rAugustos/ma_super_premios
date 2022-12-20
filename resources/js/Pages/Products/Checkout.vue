@@ -96,12 +96,13 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {Link} from '@inertiajs/inertia-vue3'
 import axios from "axios"
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import $page from "../../../../public/build/assets/Edit.23e3abee";
 
 const step = ref(1);
 const qrCode = ref("");
 const sandbox_token = ref("");
 const pix = reactive({});
-const timer = ref(20);
+const timer = ref(10);
 
 const props = defineProps({
     product: Object,
@@ -172,7 +173,7 @@ function setPIX() {
 
 function confirmCheckout() {
     this.setPIX()
-    // this.countDownTimer()
+    this.countDownTimer()
 
     this.step++
 }
@@ -187,7 +188,8 @@ function generateNumbers() {
         method: 'POST',
         url: route('generate-numbers', {
             product_id: props.product.id,
-            quantity: props.quantity
+            quantity: props.quantity,
+            user_id: $page.props.user.id,
         })
     }).then((r) => {
         console.log(r.data)
