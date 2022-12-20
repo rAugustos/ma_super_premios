@@ -24,14 +24,35 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', function () {
-    $products = Product::with(['images', 'luckyNumbers'])->limit(4)->get();
+Route::get('/', static function () {
+    $notDrawn = collect([]);
+    foreach (Product::withCount('luckyNumbers')
+                 ->get()
+                 ->where('lucky_numbers_count', '>=', 99900) as $product) {
+        if ($product->luckyNumbers->where('is_winner', '=', 1)->count() === 0) {
+            $notDrawn->push($product);
+        }
+    }
+
+    $federal = Http::withoutVerifying()->get("https://servicebus2.caixa.gov.br/portaldeloterias/api/federal")->object();
+
+    $vencedores = collect([]);
+    foreach ($notDrawn as $finalizado) {
+        foreach ($federal->listaDezenas as $numero) {
+            $vencedores->push(LuckyNumber::where('number', '=', (int)$numero)
+                ->where('product_id', '=', $finalizado->id)
+                ->get());
+        }
+    }
+
+    foreach ($vencedores as $vencedor) {
+        $vencedor->first->update([
+            'is_winner' => 1,
+        ]);
+    }
 
     return inertia('Index/Index', [
-        'products' => $products,
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'phpVersion' => PHP_VERSION,
+        'products' => Product::with(['images'])->limit(4)->get(),
     ]);
 })->name('index');
 
